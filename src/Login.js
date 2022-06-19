@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import './Login.css'
 import {getTokenFromResponse, loginUrl} from './spotify.js'
-
 function Login() {
 
   return (

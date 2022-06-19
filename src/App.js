@@ -4,6 +4,9 @@ import './App.css';
 import Login from './Login';
 import Player from './Player';
 import { getTokenFromResponse, loginUrl } from './spotify';
+import SpotifyWebApi from 'spotify-web-api-js'
+
+const spotify = new SpotifyWebApi();
 
 function App() {
 
@@ -16,7 +19,11 @@ function App() {
       console.log('Token >>> ',_token);
 
       if(_token) {
-          setToken(_token)
+          setToken(_token);
+          spotify.setAccessToken(_token);
+          spotify.getMe().then(user => {
+            console.log("Person >>> ", user);
+          })
       }
 
   },[token])
