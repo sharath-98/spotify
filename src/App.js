@@ -5,28 +5,37 @@ import Login from './Login';
 import Player from './Player';
 import { getTokenFromResponse, loginUrl } from './spotify';
 import SpotifyWebApi from 'spotify-web-api-js'
+import { useDataLayerValue } from './DataLayer';
 
 const spotify = new SpotifyWebApi();
 
 function App() {
 
   const [token, setToken] = useState(null);
+  const [{user}, dispatch] = useDataLayerValue();
 
   useEffect(()=>{
       const hashToken = getTokenFromResponse();
       window.location.hash='';
       const _token = hashToken.access_token;
       console.log('Token >>> ',_token);
+      //BQDw8U76oqt9fOSmjlPADBAJpM0Ham1NP1S17bjicwzoutDs55Ig5sGG085ov7d_dLxDDEcF8h7XnvXXY8D8EH8G5dHqHAMqynaaMOGeGPQVXlX2xpbU9heVgHk9m
 
       if(_token) {
           setToken(_token);
           spotify.setAccessToken(_token);
           spotify.getMe().then(user => {
-            console.log("Person >>> ", user);
+            dispatch({
+              type:'SET_USER',
+              user:user
+            })
           })
       }
 
-  },[token])
+  },[token]);
+  
+  console.log("Person >>> ", user);
+  
   return (
     <Router>
       <div className="App">
