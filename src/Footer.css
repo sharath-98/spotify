@@ -19,8 +19,36 @@
   color: white;
 }
 
+.footer_color{
+    color: #1ed15e;
+}
+
+.footer_color:hover, .footer_icon:hover {
+  transition: transform 200ms ease-in-out;
+  transform: scale(1.2) !important;
+}
+
+.songLogo{
+    object-fit: contain;
+    height: 50px;
+    width: 50px;
+    margin:10px;
+}
+
+.footerSong > h4{
+    margin-bottom: 5px;
+}
+
+.footerSong > p{
+    font-size: 12px;
+}
+
 .footer_left{
     flex: 0.3;
+    display: flex;
+    width: 300px;
+    align-items: center;
+    color: white;
 }
 
 .footer_right {
@@ -30,4 +58,8 @@
   flex: 0.3;
   justify-content: space-between;
   
+}
+
+.footer_right * .MuiSlider-root {
+  color: green;
 }

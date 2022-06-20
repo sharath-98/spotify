@@ -8,25 +8,29 @@ function Footer() {
   return (
     <div className='footer'>
       <div className='footer_left'>
-
+        <img className='songLogo' src=''/>
+        <div className='footerSong'>
+          <h4>Hurray</h4>
+          <p>My songs</p>
+        </div>
       </div>
 
       <div className='footer_middle'>
-        <Shuffle className="footer__green" />
-        <SkipPreviousOutlined className="footer__icon" />
+        <Shuffle className="footer_color" />
+        <SkipPreviousOutlined className="footer_icon" />
         {playing ? (
           <PauseCircleOutlineOutlined
             fontSize="large"
-            className="footer__icon"
+            className="footer_icon"
           />
         ) : (
           <PlayCircleOutlineOutlined
             fontSize="large"
-            className="footer__icon"
+            className="footer_icon"
           />
         )}
-        <SkipNextOutlined className="footer__icon" />
-        <Repeat className="footer__green" />
+        <SkipNextOutlined className="footer_icon" />
+        <Repeat className="footer_color" />
       </div>
       <div className='footer_right'>
         <Grid container spacing={2}>
