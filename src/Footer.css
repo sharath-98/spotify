@@ -3,6 +3,31 @@
     bottom: 0;
     padding: 20px;
     height: 65px;
-    width: 100%;
+    width: 97%;
+    display: flex;
+    justify-content: space-between;
     background-color: #282828;
+}
+
+.footer_middle {
+  flex: 0.4;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 300px;
+  padding: 0 100px;
+  color: white;
+}
+
+.footer_left{
+    flex: 0.3;
+}
+
+.footer_right {
+  display: flex;
+  align-items: center;
+  color: white;
+  flex: 0.3;
+  justify-content: space-between;
+  
 }
