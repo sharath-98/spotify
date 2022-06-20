@@ -11,8 +11,7 @@ const spotify = new SpotifyWebApi();
 
 function App() {
 
-  const [token, setToken] = useState(null);
-  const [{user}, dispatch] = useDataLayerValue();
+  const [{user, token}, dispatch] = useDataLayerValue();
 
   useEffect(()=>{
       const hashToken = getTokenFromResponse();
@@ -22,19 +21,20 @@ function App() {
       //BQDw8U76oqt9fOSmjlPADBAJpM0Ham1NP1S17bjicwzoutDs55Ig5sGG085ov7d_dLxDDEcF8h7XnvXXY8D8EH8G5dHqHAMqynaaMOGeGPQVXlX2xpbU9heVgHk9m
 
       if(_token) {
-          setToken(_token);
+          dispatch({
+            type:'SET_TOKEN',
+            token:_token
+          });
           spotify.setAccessToken(_token);
           spotify.getMe().then(user => {
             dispatch({
               type:'SET_USER',
               user:user
-            })
-          })
+            });
+          });
       }
 
-  },[token]);
-  
-  console.log("Person >>> ", user);
+  },[]);
   
   return (
     <Router>
@@ -43,7 +43,7 @@ function App() {
           <Route path='/' element={
             <Fragment>
               {
-                token?(<Player/>):(<Login/>)
+                token?(<Player spotify={spotify} />):(<Login/>)
               }
             </Fragment>
           }>
