@@ -7,6 +7,7 @@ import Song from './Song';
 
 function Body({spotify}) {
   const [{recent_playlist, discover_weekly}, dispatch] = useDataLayerValue();
+  console.log("My recent playlist",recent_playlist)
   return (
     <div className='body'>
       <Header spotify={spotify}/>
@@ -26,9 +27,14 @@ function Body({spotify}) {
           <Favorite fontSize='large'/>
           <MoreHoriz/>
         </div>
-        {discover_weekly?.tracks.items.map(item => (
+        
+      {
+        recent_playlist.length!=0 ? recent_playlist.tracks.items.map(item => (
           <Song track={item.track}/>
-        ))}
+        )):discover_weekly?.tracks.items.map(item => (
+          <Song track={item.track}/>
+        ))
+      }
       </div>
     </div>
   )

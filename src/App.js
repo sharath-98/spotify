@@ -11,7 +11,7 @@ const spotify = new SpotifyWebApi();
 
 function App() {
 
-  const [{user, token, recently_played}, dispatch] = useDataLayerValue();
+  const [{user, token, recently_played, playlistId}, dispatch] = useDataLayerValue();
 
   useEffect(()=>{
       const hashToken = getTokenFromResponse();
@@ -54,10 +54,20 @@ function App() {
           });
         });
 
+        if(playlistId!="")
+        {
+          spotify.getPlaylist(playlistId).then(response =>{
+          dispatch({
+            type:'SET_RECENT_PLAYLIST',
+            recent_playlist: response
+          });
+        });
+        }
+
       }
 
-  },[]);
-  spotify.getPlaylist(recently_played).then(response =>{
+  },[playlistId]);
+ spotify.getPlaylist(playlistId).then(response =>{
           dispatch({
             type:'SET_RECENT_PLAYLIST',
             recent_playlist: response
