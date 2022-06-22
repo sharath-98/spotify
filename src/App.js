@@ -11,7 +11,7 @@ const spotify = new SpotifyWebApi();
 
 function App() {
 
-  const [{user, token}, dispatch] = useDataLayerValue();
+  const [{user, token, recently_played}, dispatch] = useDataLayerValue();
 
   useEffect(()=>{
       const hashToken = getTokenFromResponse();
@@ -32,16 +32,37 @@ function App() {
               user:user
             });
           });
+
           spotify.getUserPlaylists().then((playlists) => {
             dispatch({
               type:'SET_PLAYLISTS',
               playlists:playlists
             });
           });
+
+          spotify.getMyRecentlyPlayedTracks().then(recentPlaylists => {
+            dispatch({
+              type:'SET_RECENT',
+              recently_played: recentPlaylists
+            });
+          });
+
+          spotify.getPlaylist('4PT40u0uEKWWaCxfc2jcGE').then(response =>{
+          dispatch({
+            type:'SET_DISCOVER_WEEKLY',
+            discover_weekly: response
+          });
+        });
+
       }
 
   },[]);
-  
+  spotify.getPlaylist(recently_played).then(response =>{
+          dispatch({
+            type:'SET_RECENT_PLAYLIST',
+            recent_playlist: response
+          });
+        });
   return (
     <Router>
       <div className="App">

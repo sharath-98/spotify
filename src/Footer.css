@@ -1,6 +1,8 @@
 .footer{
     position: fixed;
     bottom: 0;
+    height: 10vh;
+    flex: 0.2;
     padding: 20px;
     height: 65px;
     width: 97%;
