@@ -1,5 +1,5 @@
 import { Favorite, More, MoreHoriz, PlayCircleFilled } from '@material-ui/icons';
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './Body.css'
 import { useDataLayerValue } from './DataLayer'
 import Header from './Header'
@@ -7,7 +7,21 @@ import Song from './Song';
 
 function Body({spotify}) {
   const [{recent_playlist, discover_weekly}, dispatch] = useDataLayerValue();
-  console.log("My recent playlist",recent_playlist)
+  const [songTitle, setSongTitle] = useState();
+  const [songAuthor, setSongAuthor] = useState();
+  const handleSongChange = (e) =>{
+    setSongTitle(e.currentTarget.attributes.songChosen.value);
+    setSongAuthor(e.currentTarget.attributes.singer.value);
+   // console.log(recent_playlist)
+  };
+  useEffect(()=>{
+    dispatch({
+                type:'SET_SONG_DETAILS',
+                songName: songTitle,
+                songArtist: songAuthor
+              });
+  },[songTitle, songAuthor]);
+
   return (
     <div className='body'>
       <Header spotify={spotify}/>
@@ -23,20 +37,25 @@ function Body({spotify}) {
       </div>
       <div className='body_songs'>
         <div className='body_icons'>
-          <PlayCircleFilled className='body_play'/>
+          <PlayCircleFilled className='body_play body_color'/>
           <Favorite fontSize='large'/>
           <MoreHoriz/>
         </div>
         
-      {
+      
+        {
         recent_playlist.length!=0 ? recent_playlist.tracks.items.map(item => (
-          <Song track={item.track}/>
+          <div onClick={handleSongChange} songChosen={item.track.name} singer={item.track.artists[0].name}>
+            <Song track={item.track}/>
+            </div>
         )):discover_weekly?.tracks.items.map(item => (
-          <Song track={item.track}/>
+          <div onClick={handleSongChange} songChosen={item.track.name} singer={item.track.artists[0].name}>
+            <Song track={item.track}/>
+            </div>
         ))
       }
       </div>
-    </div>
+      </div>
   )
 }
 

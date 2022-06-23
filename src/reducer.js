@@ -9,6 +9,8 @@ export const initialState = {
   recent_playlist: [],
   discover_weekly:null,
   playlistId:"",
+  songName:"",
+  songArtist:"",
   token: null
   //token:"BQBHFwj_Ikxxgw4RYQvanTAe7fUSnwfZwrdlAqz2TuXMW3b5QI9Mflgowdhs9FkzKS3fO3Nj5fYrAOxqJZmvMyNxw4Y8MN7r7_ZOJ13WXrlysgNA-X-1I4P6zW1V189M_xUHz3SinjHwhsmif1RIzY6DX4xMahyl_o1jE1tHOiCZ3R1HETzVf2IOy70dUXrWZX6K1nhJAq-0lqOGS1A--pV_mu5njclSjze33uCFwndbRP3cl_AnunSt1GHChoSkv57TklhS01DC847tr3R6OeQHltarYAfbGKufrz0V5rgmOeU20PrLvgsExElqlnHLJ7u_GeCrKKJNUA"
 
@@ -55,6 +57,12 @@ const reducer = (state, action) => {
       return {
         ...state,
         playlists: action.playlists,
+      };
+      case "SET_SONG_DETAILS":
+      return {
+        ...state,
+        songName: action.songName,
+        songArtist: action.songArtist,
       };
       default:
         return state;
