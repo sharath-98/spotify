@@ -7,17 +7,19 @@ import { getTokenFromResponse, loginUrl } from './spotify';
 import SpotifyWebApi from 'spotify-web-api-js'
 import { useDataLayerValue } from './DataLayer';
 
-const spotify = new SpotifyWebApi();
+var spotify = new SpotifyWebApi();
+
+
 
 function App() {
 
-  const [{user, token, recently_played, playlistId}, dispatch] = useDataLayerValue();
+  const [{user, token, recent_details, recently_played, playlistId}, dispatch] = useDataLayerValue();
 
   useEffect(()=>{
       const hashToken = getTokenFromResponse();
       window.location.hash='';
       const _token = hashToken.access_token;
-      console.log('Token >>> ',_token);
+      //console.log('Token >>> ',_token);
       //BQDw8U76oqt9fOSmjlPADBAJpM0Ham1NP1S17bjicwzoutDs55Ig5sGG085ov7d_dLxDDEcF8h7XnvXXY8D8EH8G5dHqHAMqynaaMOGeGPQVXlX2xpbU9heVgHk9m
 
       if(_token) {
@@ -26,13 +28,7 @@ function App() {
             token:_token
           });
           spotify.setAccessToken(_token);
-          spotify.getMe().then(user => {
-            dispatch({
-              type:'SET_USER',
-              user:user
-            });
-          });
-
+          
           spotify.getUserPlaylists().then((playlists) => {
             dispatch({
               type:'SET_PLAYLISTS',
@@ -40,9 +36,20 @@ function App() {
             });
           });
 
+
+
+          
+          spotify.getMe().then(user => {
+            dispatch({
+              type:'SET_USER',
+              user:user
+            });
+          });
+
+
           spotify.getMyRecentlyPlayedTracks().then(recentPlaylists => {
             dispatch({
-              type:'SET_RECENT',
+              type:'SET_RECENT_ID',
               recently_played: recentPlaylists
             });
           });
@@ -54,25 +61,29 @@ function App() {
           });
         });
 
-        if(playlistId!="")
+        if(playlistId!=="")
         {
-          spotify.getPlaylist(playlistId).then(response =>{
-          dispatch({
-            type:'SET_RECENT_PLAYLIST',
-            recent_playlist: response
-          });
+          console.log("im here>>>", playlistId)
+          spotify.getPlaylist(playlistId).then((response) => {
+            dispatch({
+              type:'SET_RECENT_DETAILS',
+              recent_details: response
+            });
         });
         }
 
       }
+      
 
-  },[playlistId]);
- spotify.getPlaylist(playlistId).then(response =>{
+  },[playlistId, recent_details, recently_played, user]);
+    spotify.getPlaylist(recently_played).then(response=>{
           dispatch({
-            type:'SET_RECENT_PLAYLIST',
-            recent_playlist: response
+            type:'SET_RECENT_DETAILS',
+            recent_details: response
           });
         });
+    
+    
   return (
     <Router>
       <div className="App">

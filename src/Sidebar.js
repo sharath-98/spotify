@@ -5,12 +5,9 @@ import SidebarOption from './SidebarOption'
 import { useDataLayerValue } from './DataLayer';
 
 function Sidebar({spotify}) {
-  const [{playlists, recent_playlist}, dispatch] = useDataLayerValue();
+  const [{playlists}, dispatch] = useDataLayerValue();
   const [playlistId, setPlaylistId] = useState("");
   const handlePlaylistChange = (e) =>{
-    console.log("Click >>> ", e.currentTarget.attributes.title.value, "..."
-    ,e.currentTarget.attributes.urlPlaylist.value);
-
     setPlaylistId(e.currentTarget.attributes.urlPlaylist.value);
   };
 
@@ -19,6 +16,12 @@ function Sidebar({spotify}) {
             type:'SET_PLAYLIST_ID',
             playlistId: playlistId
       });
+      spotify.getPlaylist(playlistId).then((response) => {
+            dispatch({
+              type:'SET_CLICKED_DETAILS',
+              clicked_details: response
+            });
+        });
   },[playlistId]);
 
   return (

@@ -1,5 +1,5 @@
 .body{
-    height: 90vh;
+    height: 80vh;
     flex: 0.8;
     color: white;
     padding: 30px;
@@ -14,7 +14,7 @@
     padding: 10px;
 }
 
-.body_info > img{
+.body_text > img{
     height: 200px;
     width: 200px;
     box-shadow: 0 4px 60px rgba(0, 0, 0, 0.5);

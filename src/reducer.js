@@ -5,8 +5,9 @@ export const initialState = {
   playing: false,
   playlists: [],
   spotify: null,
-  recently_played: "",
-  recent_playlist: [],
+  recently_played: [],
+  recent_details:[],
+  clicked_details:[],
   discover_weekly:null,
   playlistId:"",
   songName:"",
@@ -17,9 +18,12 @@ export const initialState = {
 };
 
 const reducer = (state, action) => {
-   // console.log("ACTION >>> ",action);  
+    if(action.type==='SET_CLICKED_DETAILS')
+    {
+      console.log(action.type," >>> ",action.clicked_details);
+    }  
     const res=[];
-    if(action.type === 'SET_RECENT' && action.recently_played.items[0]){
+    if(action.type === 'SET_RECENT_ID' && action.recently_played.items[0]){
       res.push(action.recently_played.items[0]?.context.uri.split(':')[2]);
     }
     switch (action.type) {
@@ -33,20 +37,25 @@ const reducer = (state, action) => {
         ...state,
         token: action.token,
       };
-      case "SET_RECENT":
+      case "SET_RECENT_ID":
       return {
         ...state,
         recently_played: res[0],
+      };
+      case "SET_RECENT_DETAILS":
+      return {
+        ...state,
+        recent_details: action.recent_details,
+      };
+      case "SET_CLICKED_DETAILS":
+      return {
+        ...state,
+        clicked_details: action.clicked_details,
       };
       case "SET_PLAYLIST_ID":
       return {
         ...state,
         playlistId: action.playlistId,
-      };
-      case "SET_RECENT_PLAYLIST":
-      return {
-        ...state,
-        recent_playlist: action.recent_playlist,
       };
       case "SET_DISCOVER_WEEKLY":
       return {

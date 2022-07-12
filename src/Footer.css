@@ -2,10 +2,9 @@
     position: fixed;
     bottom: 0;
     height: 10vh;
+    width: 100%;
     flex: 0.2;
     padding: 20px;
-    height: 65px;
-    width: 100%;
     display: flex;
     justify-content: space-between;
     background-color: #282828;
