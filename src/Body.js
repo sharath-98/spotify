@@ -23,6 +23,7 @@ function Body({spotify}) {
 
   return (
     <div className='body'>
+    <p>Hello</p>
       <Header spotify={spotify}/>
       <div className='body_info'>
         <div className="body_text">
